@@ -50,6 +50,8 @@ function post(invite='a-long-test-invitation', content=[0xff,0xd8,0xff,0x01]) {
 
 test('invitation gates submission and photos remain private until administrator approval', async () => {
   const {invoke,rows} = setup();
+  assert.equal((await invoke('check-invite',{method:'POST',headers:{'x-shuangshi-invite':'wrong'}})).status,403);
+  assert.equal((await invoke('check-invite',{method:'POST',headers:{'x-shuangshi-invite':'a-long-test-invitation'}})).status,200);
   assert.equal((await invoke('submit',post('wrong'))).status,403);
   assert.equal(rows.length,0);
   assert.equal((await invoke('submit',post())).status,201);

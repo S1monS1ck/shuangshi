@@ -24,12 +24,16 @@
   form.onsubmit = async event => {
     event.preventDefault(); const image = imageInput.files[0];
     if (!image || image.size > 50 * 1024 * 1024) { status.textContent = '请选择一张不超过 50 MB 的照片。'; return; }
-    submit.disabled = true; status.textContent = '正在上传原图并提交审核，请稍候…';
+    submit.disabled = true; status.textContent = '正在验证邀请码，请稍候…';
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(),120000);
     try {
+      const headers = {...commonHeaders,'x-shuangshi-invite':form.elements.invite.value};
+      const checked = await fetch(`${api}?action=check-invite`,{method:'POST',headers,signal:controller.signal});
+      if (!checked.ok) { let result = {}; try { result = await checked.json(); } catch {} throw new Error(result.error || '邀请码验证失败，请稍后再试。'); }
+      status.textContent = '正在上传原图并提交审核，请稍候…';
       const data = new FormData(form); data.set('image',image); data.delete('invite');
-      const response = await fetch(`${api}?action=submit`,{method:'POST',headers:{...commonHeaders,'x-shuangshi-invite':form.elements.invite.value},body:data,signal:controller.signal});
+      const response = await fetch(`${api}?action=submit`,{method:'POST',headers,body:data,signal:controller.signal});
       let result = {}; try { result = await response.json(); } catch {}
       if (!response.ok) throw new Error(result.error || '提交失败，请稍后再试。');
       form.elements.invite.value = ''; imageInput.value = ''; document.querySelector('#draft-preview').hidden = true;

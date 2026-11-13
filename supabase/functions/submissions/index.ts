@@ -84,6 +84,10 @@ async function handler(req) {
     if (result.error || !result.data) return fail(req,404,'找不到图片。');
     return new Response(result.data,{headers:{...cors(req),'Content-Type':row.content_type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
   }
+  if (action === 'check-invite' && req.method === 'POST') {
+    if (!await invitationMatches(req.headers.get('x-shuangshi-invite'))) return fail(req,403,'邀请码不正确或当前未开放投稿。');
+    return json(req,200,{ok:true});
+  }
   if (action === 'submit' && req.method === 'POST') {
     if (!req.headers.get('content-type')?.toLowerCase().startsWith('multipart/form-data;')) return fail(req,400,'投稿格式不正确。');
     if (!await invitationMatches(req.headers.get('x-shuangshi-invite'))) return fail(req,403,'邀请码不正确或当前未开放投稿。');
