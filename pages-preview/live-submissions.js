@@ -25,15 +25,17 @@
     event.preventDefault(); const image = imageInput.files[0];
     if (!image || image.size > 50 * 1024 * 1024) { status.textContent = '请选择一张不超过 50 MB 的照片。'; return; }
     submit.disabled = true; status.textContent = '正在上传原图并提交审核，请稍候…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(),120000);
     try {
       const data = new FormData(form); data.set('image',image); data.delete('invite');
-      const response = await fetch(`${api}?action=submit`,{method:'POST',headers:{...commonHeaders,'x-shuangshi-invite':form.elements.invite.value},body:data});
+      const response = await fetch(`${api}?action=submit`,{method:'POST',headers:{...commonHeaders,'x-shuangshi-invite':form.elements.invite.value},body:data,signal:controller.signal});
       let result = {}; try { result = await response.json(); } catch {}
       if (!response.ok) throw new Error(result.error || '提交失败，请稍后再试。');
       form.elements.invite.value = ''; imageInput.value = ''; document.querySelector('#draft-preview').hidden = true;
       status.textContent = result.message || '投稿已收到，等待管理员审核。';
-    } catch (error) { status.textContent = error.message || '提交失败，请检查网络后重试。'; }
-    finally { submit.disabled = false; }
+    } catch (error) { status.textContent = error.name === 'AbortError' ? '上传等待超时。请先联系管理员确认是否收到，再决定是否重试，以免重复投稿。' : error instanceof TypeError ? '网络连接失败，请检查网络后重试。' : error.message || '提交失败，请稍后再试。'; }
+    finally { clearTimeout(timeout); submit.disabled = false; }
   };
   async function loadPublished() {
     try {
