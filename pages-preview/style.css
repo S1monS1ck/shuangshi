@@ -35,3 +35,5 @@
 .submit-dialog .field-help{display:block;margin:-12px 0 18px;color:var(--muted);font-size:10px;line-height:1.6}
 .submit-dialog select{width:100%}
 @media(max-width:420px){.submit-dialog .form-row{grid-template-columns:1fr;gap:0}}
+
+.submit-dialog .consent-label{display:flex;align-items:start;gap:9px;line-height:1.8;color:var(--muted);margin:12px 0}.submit-dialog .consent-label input{flex:none;margin:4px 0 0}.save-local-draft{margin-top:18px;font-size:12px}.submit-dialog button:disabled{opacity:.55;cursor:wait}

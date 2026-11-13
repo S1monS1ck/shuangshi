@@ -3,3 +3,6 @@ node_modules/
 pages-preview-check.cjs
 .DS_Store
 Thumbs.db
+.env
+.env.*
+!.env.example

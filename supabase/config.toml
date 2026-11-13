@@ -1,0 +1,4 @@
+project_id = "shuangshi"
+
+[functions.submissions]
+verify_jwt = false

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>投稿管理 · 雙拾</title>
+  <link rel="stylesheet" href="../style.css?v=contribution-20261113">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header"><a href="../#/" class="admin-brand">雙拾 <span>投稿管理</span></a><button id="sign-out" hidden>退出登录</button></header>
+  <main class="admin-main">
+    <section id="login-panel" class="admin-panel">
+      <p class="eyebrow">SHUANG SHI / ADMIN</p><h1>欢迎回来。</h1>
+      <p class="admin-muted">请使用管理员专属账号登录，查看和审核投稿。</p>
+      <form id="login-form"><label>邮箱<input name="email" type="email" autocomplete="username" required></label><label>密码<input name="password" type="password" autocomplete="current-password" required></label><button type="submit" class="primary">登录 <span>↗</span></button></form>
+      <p id="login-status" role="status" class="admin-status"></p>
+    </section>
+    <section id="review-panel" hidden>
+      <div class="admin-heading"><div><p class="eyebrow">REVIEW / CONTRIBUTIONS</p><h1>拾起每一份投稿。</h1><p class="admin-muted">通过审核后，作品才会出现在网站上。</p></div><button id="refresh" class="admin-link">刷新列表 ↻</button></div>
+      <div class="admin-tabs" role="group" aria-label="投稿状态"><button data-status="pending" aria-pressed="true">待审核</button><button data-status="approved" aria-pressed="false">已发布</button><button data-status="rejected" aria-pressed="false">未通过</button></div>
+      <p id="review-status" role="status" class="admin-status"></p><div id="submissions" class="admin-list"></div>
+    </section>
+  </main>
+  <script src="../map-data.js?v=32f19868f6e2"></script><script src="../backend-config.js"></script><script src="admin.js"></script>
+</body>
+</html>
