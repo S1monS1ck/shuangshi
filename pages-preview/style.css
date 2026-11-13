@@ -27,3 +27,11 @@
 /* School emblem sits alongside the site wordmark. Its transparent background follows the page color. */
 .school-emblem{display:block;flex:none;width:44px;height:44px;object-fit:contain}
 @media(max-width:700px){.brand{gap:10px}.school-emblem{width:34px;height:34px}.header-actions{gap:10px}.header-actions .contribute-trigger span{margin-left:8px}}
+
+/* Contribution fields use the same categories and places as the site. */
+.submit-dialog .form-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+.submit-dialog .form-row label{min-width:0}
+.submit-dialog .field-hint{font-size:10px;color:var(--muted);font-weight:normal}
+.submit-dialog .field-help{display:block;margin:-12px 0 18px;color:var(--muted);font-size:10px;line-height:1.6}
+.submit-dialog select{width:100%}
+@media(max-width:420px){.submit-dialog .form-row{grid-template-columns:1fr;gap:0}}
