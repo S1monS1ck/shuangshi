@@ -23,3 +23,7 @@
 @media(max-width:700px){.atlas-places{max-height:148px}.map-sheet .atlas-pin{font-size:12px}}
 
 .outline-key{background:transparent;border:1px dashed #8c9f87}
+
+/* School emblem sits alongside the site wordmark. Its transparent background follows the page color. */
+.school-emblem{display:block;flex:none;width:44px;height:44px;object-fit:contain}
+@media(max-width:700px){.brand{gap:10px}.school-emblem{width:34px;height:34px}.header-actions{gap:10px}.header-actions .contribute-trigger span{margin-left:8px}}
